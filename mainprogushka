@@ -1,0 +1,440 @@
+//табличка должна быть красивой с использованием спец символов
+//главная функция - ввод элементов, перебор элементов (внутри функция расчета), печать (без хранения)
+
+
+#include <stdio.h>
+
+int rab(int [][10], int, int , int , int , int* );
+void output(int, int, int, int);
+void output2(int, int, int, char);
+
+//функции для таблицы
+void verh();
+void razdelitel();
+
+void main()
+{
+	int mass[10][10], i, j, n, m, min, fl,number = 1;
+	printf("vvedite razmeri matrici\n");
+	scanf_s("%d%d", &n, &m);
+	printf("vvedite elementy matrici\n");
+	for (i = 0; i < n; i++)
+		for (j = 0; j < m; j++)
+			scanf_s("%d", &mass[i][j]);
+
+	verh();
+
+
+	for (i = 0; i < n; i++)
+		for (j = 0; j < m; j++)
+		{
+			min = rab(mass, i, j, n, m, &fl);
+			if (fl == 1)
+				output(number, i, j, min);
+			else
+				output2(number, i, j, '-');
+			if (number != n * m)
+				number += 1;
+			fl = 0;
+		}
+}
+
+int rab(int mass[10][10], int i, int j, int n, int m, int*fl)
+{
+	int min, up, foundmin = 0;
+	int k = i, l = j;
+
+	if (mass[i][j] > 0)
+	{
+		min = mass[i][j];
+		foundmin = 1;
+		*fl = 1;
+	}
+	else
+	{
+		for (up = i - 1; up >= 0; up--)
+			if (mass[up][j] > 0)
+			{
+				min = mass[up][j];
+				*fl = 1;
+				foundmin = 1;
+			}
+		while ((i < n) && (j < m))
+		{
+			if (mass[i][j] > 0)
+			{
+				min = mass[i][j];
+				*fl = 1;
+				foundmin = 1;
+			}
+			i++, j++;
+		}
+	}
+
+	i = k, j = l;
+
+	if (foundmin == 1)
+	{
+		for (up = i - 1; up >= 0; up--)
+			if ((mass[up][j] < min) && (mass[up][j] > 0))
+			{
+				min = mass[up][j];
+				*fl = 1;
+			}
+
+
+		while ((i < n) && (j < m))
+		{
+			if ((mass[i][j] < min) && (mass[i][j] > 0))
+			{
+				min = mass[i][j];
+				*fl = 1;
+			}
+			i++, j++;
+		}
+		return min;
+	}
+	else 
+		return 0;
+}
+
+void output(int number, int i, int j, int min)
+{
+	i++, j++;
+	if ((number < 10) && (i < 10) && (j < 10) && (min < 10))
+	{
+		putchar(179);
+		printf("  %d  ", number);
+		putchar(179);
+		printf("  %d  ", i);
+		putchar(179);
+		printf("  %d  ", j);
+		putchar(179);
+		printf("  %d  ", min);
+		putchar(179);
+		razdelitel();
+	}
+	else
+		if ((number >= 10) && (i < 10) && (j < 10) && (min < 10))
+		{
+			putchar(179);
+			printf("  %d ", number);
+			putchar(179);
+			printf("  %d  ", i);
+			putchar(179);
+			printf("  %d  ", j);
+			putchar(179);
+			printf("  %d  ", min);
+			putchar(179);
+			razdelitel();
+		}
+		else 
+			if ((number < 10) && (i >= 10) && (j < 10) && (min < 10))
+			{
+				putchar(179);
+				printf("  %d  ", number);
+				putchar(179);
+				printf("  %d ", i);
+				putchar(179);
+				printf("  %d  ", j);
+				putchar(179);
+				printf("  %d  ", min);
+				putchar(179);
+				razdelitel();
+			}
+			else
+				if ((number < 10) && (i < 10) && (j >= 10) && (min < 10))
+				{
+					putchar(179);
+					printf("  %d  ", number);
+					putchar(179);
+					printf("  %d  ", i);
+					putchar(179);
+					printf("  %d ", j);
+					putchar(179);
+					printf("  %d  ", min);
+					putchar(179);
+					razdelitel();
+				}
+				else 
+					if ((number < 10) && (i < 10) && (j < 10) && (min >= 10))
+					{
+						putchar(179);
+						printf("  %d  ", number);
+						putchar(179);
+						printf("  %d  ", i);
+						putchar(179);
+						printf("  %d  ", j);
+						putchar(179);
+						printf("  %d ", min);
+						putchar(179);
+						razdelitel();
+					}
+					else
+						if ((number >= 10) && (i >= 10) && (j < 10) && (min < 10))
+						{
+							putchar(179);
+							printf("  %d ", number);
+							putchar(179);
+							printf("  %d ", i);
+							putchar(179);
+							printf("  %d  ", j);
+							putchar(179);
+							printf("  %d  ", min);
+							putchar(179);
+							razdelitel();
+						}
+						else
+							if ((number >= 10) && (i < 10) && (j >= 10) && (min < 10))
+							{
+								putchar(179);
+								printf("  %d ", number);
+								putchar(179);
+								printf("  %d  ", i);
+								putchar(179);
+								printf("  %d ", j);
+								putchar(179);
+								printf("  %d  ", min);
+								putchar(179);
+								razdelitel();
+							}
+							else
+								if ((number >= 10) && (i < 10) && (j < 10) && (min >= 10))
+								{
+									putchar(179);
+									printf("  %d ", number);
+									putchar(179);
+									printf("  %d  ", i);
+									putchar(179);
+									printf("  %d  ", j);
+									putchar(179);
+									printf("  %d ", min);
+									putchar(179);
+									razdelitel();
+								}
+								else
+									if ((number < 10) && (i >= 10) && (j >= 10) && (min < 10))
+									{
+										putchar(179);
+										printf("  %d  ", number);
+										putchar(179);
+										printf("  %d ", i);
+										putchar(179);
+										printf("  %d ", j);
+										putchar(179);
+										printf("  %d  ", min);
+										putchar(179);
+										razdelitel();
+									}
+									else
+										if ((number < 10) && (i >= 10) && (j < 10) && (min >= 10))
+										{
+											putchar(179);
+											printf("  %d  ", number);
+											putchar(179);
+											printf("  %d ", i);
+											putchar(179);
+											printf("  %d  ", j);
+											putchar(179);
+											printf("  %d ", min);
+											putchar(179);
+											razdelitel();
+										}
+										else 
+											if ((number < 10) && (i < 10) && (j >= 10) && (min >= 10))
+											{
+												putchar(179);
+												printf("  %d  ", number);
+												putchar(179);
+												printf("  %d  ", i);
+												putchar(179);
+												printf("  %d ", j);
+												putchar(179);
+												printf("  %d ", min);
+												putchar(179);
+												razdelitel();
+											}
+
+}
+
+void output2(int number, int i, int j, char min)
+{
+	i++, j++;
+	if ((number < 10) && (i < 10) && (j < 10) && (min < 10))
+	{
+		putchar(179);
+		printf("  %d  ", number);
+		putchar(179);
+		printf("  %d  ", i);
+		putchar(179);
+		printf("  %d  ", j);
+		putchar(179);
+		printf("  %c  ", min);
+		putchar(179);
+		razdelitel();
+	}
+	else
+		if ((number >= 10) && (i < 10) && (j < 10) && (min < 10))
+		{
+			putchar(179);
+			printf("  %d ", number);
+			putchar(179);
+			printf("  %d  ", i);
+			putchar(179);
+			printf("  %d  ", j);
+			putchar(179);
+			printf("  %c  ", min);
+			putchar(179);
+			razdelitel();
+		}
+		else
+			if ((number < 10) && (i >= 10) && (j < 10) && (min < 10))
+			{
+				putchar(179);
+				printf("  %d  ", number);
+				putchar(179);
+				printf("  %d ", i);
+				putchar(179);
+				printf("  %d  ", j);
+				putchar(179);
+				printf("  %c  ", min);
+				putchar(179);
+				razdelitel();
+			}
+			else
+				if ((number < 10) && (i < 10) && (j >= 10) && (min < 10))
+				{
+					putchar(179);
+					printf("  %d  ", number);
+					putchar(179);
+					printf("  %d  ", i);
+					putchar(179);
+					printf("  %d ", j);
+					putchar(179);
+					printf("  %c  ", min);
+					putchar(179);
+					razdelitel();
+				}
+				else
+					if ((number < 10) && (i < 10) && (j < 10) && (min > 10))
+					{
+						putchar(179);
+						printf("  %d  ", number);
+						putchar(179);
+						printf("  %d  ", i);
+						putchar(179);
+						printf("  %d  ", j);
+						putchar(179);
+						printf("  %c  ", min);
+						putchar(179);
+						razdelitel();
+					}
+					else
+						if ((number >= 10) && (i >= 10) && (j < 10) && (min < 10))
+						{
+							putchar(179);
+							printf("  %d ", number);
+							putchar(179);
+							printf("  %d ", i);
+							putchar(179);
+							printf("  %d  ", j);
+							putchar(179);
+							printf("  %c  ", min);
+							putchar(179);
+							razdelitel();
+						}
+						else
+							if ((number >= 10) && (i < 10) && (j >= 10) && (min < 10))
+							{
+								putchar(179);
+								printf("  %d ", number);
+								putchar(179);
+								printf("  %d  ", i);
+								putchar(179);
+								printf("  %d ", j);
+								putchar(179);
+								printf("  %c  ", min);
+								putchar(179);
+								razdelitel();
+							}
+							else
+								if ((number >= 10) && (i < 10) && (j < 10) && (min >= 10))
+								{
+									putchar(179);
+									printf("  %d ", number);
+									putchar(179);
+									printf("  %d  ", i);
+									putchar(179);
+									printf("  %d  ", j);
+									putchar(179);
+									printf("  %c  ", min);
+									putchar(179);
+									razdelitel();
+								}
+								else
+									if ((number < 10) && (i >= 10) && (j >= 10) && (min < 10))
+									{
+										putchar(179);
+										printf("  %d  ", number);
+										putchar(179);
+										printf("  %d ", i);
+										putchar(179);
+										printf("  %d ", j);
+										putchar(179);
+										printf("  %c  ", min);
+										putchar(179);
+										razdelitel();
+									}
+									else
+										if ((number < 10) && (i >= 10) && (j < 10) && (min >= 10))
+										{
+											putchar(179);
+											printf("  %d  ", number);
+											putchar(179);
+											printf("  %d ", i);
+											putchar(179);
+											printf("  %d  ", j);
+											putchar(179);
+											printf("  %c  ", min);
+											putchar(179);
+											razdelitel();
+										}
+										else
+											if ((number < 10) && (i < 10) && (j >= 10) && (min >= 10))
+											{
+												putchar(179);
+												printf("  %d  ", number);
+												putchar(179);
+												printf("  %d  ", i);
+												putchar(179);
+												printf("  %d ", j);
+												putchar(179);
+												printf("  %c  ", min);
+												putchar(179);
+												razdelitel();
+											}
+}
+
+void verh()
+{
+	printf("_________________________");
+	printf("\n");
+	putchar(179); printf("  N  ");
+	putchar(179); printf("  i  ");
+	putchar(179); printf("  j  ");
+	putchar(179); printf(" Rez "); putchar(179); 
+	razdelitel();
+}
+
+void razdelitel()
+{
+	printf("\n");
+	putchar(176); putchar(176); putchar(176); putchar(176);
+	putchar(176); putchar(176); putchar(176); putchar(176);
+	putchar(176); putchar(176); putchar(176); putchar(176);
+	putchar(176); putchar(176); putchar(176); putchar(176);
+	putchar(176); putchar(176); putchar(176); putchar(176);
+	putchar(176); putchar(176); putchar(176); putchar(176);
+	putchar(176);
+	printf("\n");
+}
